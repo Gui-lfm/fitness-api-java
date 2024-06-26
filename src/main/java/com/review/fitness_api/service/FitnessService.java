@@ -57,6 +57,9 @@ public class FitnessService implements FitnessServiceInterface {
 
     @Override
     public List<WorkoutDto> getAllWorkouts() {
-        return List.of();
+        return fakeFitnessDatabase.getAllWorkouts()
+                .stream()
+                .map(workout -> new WorkoutDto(workout.getId(), workout.getName(), workout.getRepetitions()))
+                .toList();
     }
 }
