@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +25,12 @@ public class FitnessController implements FitnessControllerInterface {
     @GetMapping
     public String getFitness() {
         return "Boas vindas à API de Fitness!";
+    }
+
+    @GetMapping("/workouts")
+    public ResponseEntity<List<WorkoutDto>> getAllWorkouts(){
+        List<WorkoutDto> workoutDtos = fitnessService.getAllWorkouts();
+        return  ResponseEntity.ok(workoutDtos);
     }
 
     @GetMapping("/workouts/{id}")
