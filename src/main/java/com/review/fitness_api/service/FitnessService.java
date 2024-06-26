@@ -3,6 +3,7 @@ package com.review.fitness_api.service;
 import com.review.fitness_api.database.FakeFitnessDatabase;
 import com.review.fitness_api.dto.WorkoutCreationDto;
 import com.review.fitness_api.dto.WorkoutDto;
+import com.review.fitness_api.model.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,20 @@ public class FitnessService implements FitnessServiceInterface {
 
     @Override
     public Optional<WorkoutDto> getWorkout(Long id) {
-        return Optional.empty();
+        Optional<Workout> optionalWorkout = fakeFitnessDatabase.getWorkout(id);
+
+        if (optionalWorkout.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Workout foundWorkout = optionalWorkout.get();
+        WorkoutDto workoutDto = new WorkoutDto(
+                foundWorkout.getId(),
+                foundWorkout.getName(),
+                foundWorkout.getRepetitions()
+        );
+
+        return Optional.of(workoutDto);
     }
 
     @Override
