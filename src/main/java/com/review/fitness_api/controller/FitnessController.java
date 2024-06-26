@@ -1,13 +1,12 @@
 package com.review.fitness_api.controller;
 
+import com.review.fitness_api.dto.WorkoutCreationDto;
 import com.review.fitness_api.dto.WorkoutDto;
 import com.review.fitness_api.service.FitnessServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -36,5 +35,13 @@ public class FitnessController implements FitnessControllerInterface {
         }
 
         return ResponseEntity.ok(optionalWorkoutDto.get());
+    }
+
+    @PostMapping("/workouts")
+    public ResponseEntity<WorkoutDto> postWorkout(@RequestBody WorkoutCreationDto workoutCreationDto){
+
+        WorkoutDto createdWorkout = fitnessService.saveWorkout(workoutCreationDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdWorkout);
     }
 }
